@@ -7,6 +7,7 @@
 #include <stdio.h>
 
 #include "Window.h"
+#include "FPSCounter.h"
 
 int main() {
 	std::cout << "InMine version: " << InMine_VERSION_STRING << std::endl;
@@ -37,12 +38,16 @@ int main() {
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
 	glClearColor(1, 0, 0, 1);
+
+	FPSCounter fps;
 	while (window.isOpen()) {
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		window.update();
+
+		fps.tick();
 	}
 
 	return 0;
