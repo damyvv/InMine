@@ -6,8 +6,8 @@
 #include <iostream>
 #include <stdio.h>
 
-#include "Window.h"
-#include "FPSCounter.h"
+#include "graphics/Window.h"
+#include "utils/FPSCounter.h"
 
 int main() {
 	std::cout << "InMine version: " << InMine_VERSION_STRING << std::endl;
