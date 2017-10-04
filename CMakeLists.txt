@@ -1,6 +1,10 @@
 cmake_minimum_required (VERSION 2.6)
 project (InMine)
 
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+	set(CMAKE_CXX_FLAGS "-std=gnu++11 ${CMAKE_CXX_FLAGS}")
+endif()
+
 # The version number.
 set (InMine_VERSION_PREFIX "alpha")
 set (InMine_VERSION_MAJOR 0)
