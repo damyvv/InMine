@@ -37,7 +37,12 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/Dependencies/glfw")
 
 include_directories("${PROJECT_SOURCE_DIR}/include")
 
-add_executable (InMine src/main.cpp)
+file(GLOB_RECURSE InMine_SOURCE
+	"src/*.cpp"
+	"src/*.h"
+)
+
+add_executable (InMine ${InMine_SOURCE})
 
 target_link_libraries (InMine glfw)
 target_link_libraries (InMine ${OPENGL_gl_LIBRARY})
