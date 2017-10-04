@@ -9,6 +9,8 @@
 #include "graphics/Window.h"
 #include "utils/FPSCounter.h"
 
+#include "utils/FileLoader.h"
+
 int main() {
 	std::cout << "InMine version: " << InMine_VERSION_STRING << std::endl;
 	std::cout << "GLFW version: " << GLFW_VERSION_MAJOR << "." << GLFW_VERSION_MINOR << "." << GLFW_VERSION_REVISION << std::endl;
@@ -38,6 +40,12 @@ int main() {
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
 	glClearColor(1, 0, 0, 1);
+
+	std::string vertexShader;
+	if (FileLoader::fileToString("res/shaders/defaultVertexShader.glsl", vertexShader))
+		std::cout << "Failed to load the default vertex shader" << std::endl;
+	else
+		std::cout << vertexShader << std::endl;
 
 	FPSCounter fps;
 	while (window.isOpen()) {
