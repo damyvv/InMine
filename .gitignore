@@ -13,3 +13,6 @@ CTestTestfile.cmake
 build
 
 # End of https://www.gitignore.io/api/cmake
+
+# Generated CMake config file
+include/InMineConfig.h
