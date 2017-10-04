@@ -1,7 +1,5 @@
 #include "Window.h"
 
-#include <exception>
-
 Window::Window(unsigned int width, unsigned int height, bool fullscreen, std::string title) : 
 		m_Width(width), 
 		m_Height(height), 
@@ -10,12 +8,14 @@ Window::Window(unsigned int width, unsigned int height, bool fullscreen, std::st
 		m_IsOpen(false) {
 
 	if (!glfwInit()) {
-		throw std::exception("Failed to initialize GLFW");
+		m_Error = "Failed to initialize GLFW";
+		return;
 	}
 
 	m_Window = glfwCreateWindow(800, 600, m_Title.c_str(), NULL, NULL);
 	if (!m_Window) {
-		throw std::exception("Failed to create a GLFW window");
+		m_Error = "Failed to create a GLFW window";
+		return;
 	}
 
 	glfwMakeContextCurrent(m_Window);
@@ -23,7 +23,8 @@ Window::Window(unsigned int width, unsigned int height, bool fullscreen, std::st
 
 	int result = glewInit();
 	if (result) {
-		throw std::exception("Fatal error! Unexpected result from glewInit()");
+		m_Error = "Fatal error! Unexpected result from glewInit()";
+		return;
 	}
 
 }
