@@ -27,6 +27,8 @@ int main() {
 		return -1;
 	}
 
+	std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
+
 	glEnableVertexAttribArray(0);
 	GLuint vbo;
 	glGenBuffers(1, &vbo);
