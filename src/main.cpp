@@ -3,32 +3,19 @@
 
 #include <GLFW/glfw3.h>
 
+#include "Window.h"
+
 int main() {
 	std::cout << "InMine version: " << InMine_VERSION_STRING << std::endl;
 
-	GLFWwindow* window;
-
-	if (!glfwInit())
-		return -1;
-
-	std::string title = "InMine " + std::string(InMine_VERSION_STRING);
-	window = glfwCreateWindow(800, 600, title.c_str(), NULL, NULL);
-	if (!window) {
-		glfwTerminate();
-		return -1;
-	}
-
-	glfwMakeContextCurrent(window);
+	Window window(800, 600, false, "InMine " + std::string(InMine_VERSION_STRING));
 
 	glClearColor(1, 0, 0, 1);
-	while (!glfwWindowShouldClose(window)) {
+	while (window.isOpen()) {
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glfwSwapBuffers(window);
-
-		glfwPollEvents();
+		window.update();
 	}
 
-	glfwTerminate();
 	return 0;
 }
