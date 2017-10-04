@@ -27,7 +27,7 @@ message(STATUS "Looking for OpenGL...")
 find_package(OpenGL REQUIRED)
 
 # GLFW Configuration
-message(STATUS "Configuring GLFW")
+message(STATUS "Configuring GLFW...")
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
@@ -35,7 +35,7 @@ set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
 add_subdirectory("${PROJECT_SOURCE_DIR}/Dependencies/glfw")
 
 # GLEW Configuration
-message(STATUS "Configuring GLEW")
+message(STATUS "Configuring GLEW...")
 set(glew-cmake_BUILD_SHARED         OFF CACHE BOOL "" FORCE)
 set(glew-cmake_BUILD_STATIC         ON  CACHE BOOL "" FORCE)
 set(glew-cmake_BUILD_SINGLE_CONTEXT ON  CACHE BOOL "" FORCE)
@@ -48,6 +48,10 @@ file(GLOB_RECURSE InMine_SOURCE
 	"src/*.cpp"
 	"src/*.h"
 )
+
+# Copy resources
+message(STATUS "Coping resources...")
+file(COPY "res" DESTINATION "${CMAKE_BINARY_DIR}")
 
 add_executable (InMine ${InMine_SOURCE})
 
