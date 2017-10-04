@@ -26,14 +26,21 @@ message(STATUS "Looking for OpenGL...")
 # Add OpenGL
 find_package(OpenGL REQUIRED)
 
-
-message(STATUS "Configuring GLFW")
 # GLFW Configuration
+message(STATUS "Configuring GLFW")
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
 add_subdirectory("${PROJECT_SOURCE_DIR}/Dependencies/glfw")
+
+# GLEW Configuration
+message(STATUS "Configuring GLEW")
+set(glew-cmake_BUILD_SHARED         OFF CACHE BOOL "" FORCE)
+set(glew-cmake_BUILD_STATIC         ON  CACHE BOOL "" FORCE)
+set(glew-cmake_BUILD_SINGLE_CONTEXT ON  CACHE BOOL "" FORCE)
+set(glew-cmake_BUILD_MULTI_CONTEXT  OFF CACHE BOOL "" FORCE)
+add_subdirectory("${PROJECT_SOURCE_DIR}/Dependencies/glew")
 
 include_directories("${PROJECT_SOURCE_DIR}/include")
 
@@ -44,5 +51,6 @@ file(GLOB_RECURSE InMine_SOURCE
 
 add_executable (InMine ${InMine_SOURCE})
 
+target_link_libraries (InMine libglew_static)
 target_link_libraries (InMine glfw)
 target_link_libraries (InMine ${OPENGL_gl_LIBRARY})
