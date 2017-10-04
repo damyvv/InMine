@@ -15,12 +15,7 @@ public:
 	static int fileToString(const char* path, std::string& dest) {
 		std::ifstream file(path);
 		if (!file.is_open()) return FILE_NOT_FOUND;
-
-		dest = "";
-		file.seekg(0, std::fstream::end);
-		auto length = file.tellg();
-		file.seekg(0, std::fstream::beg);
-		dest.reserve(length);
-		file.read(&dest[0], length);
+		std::getline(file, dest, '\0');
+		return OK;
 	}
 };
