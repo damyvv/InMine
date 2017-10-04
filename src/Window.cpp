@@ -20,6 +20,12 @@ Window::Window(unsigned int width, unsigned int height, bool fullscreen, std::st
 
 	glfwMakeContextCurrent(m_Window);
 	m_IsOpen = true;
+
+	int result = glewInit();
+	if (result) {
+		throw std::exception("Fatal error! Unexpected result from glewInit()");
+	}
+
 }
 
 Window::~Window() {
