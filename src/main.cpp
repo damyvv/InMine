@@ -1,7 +1,7 @@
 #include "InMineConfig.h"
 #include <iostream>
 
-#include <GLFW\glfw3.h>
+#include <GLFW/glfw3.h>
 
 int main() {
 	std::cout << "InMine version: " << InMine_VERSION_STRING << std::endl;
