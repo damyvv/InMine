@@ -41,11 +41,48 @@ int main() {
 
 	glClearColor(1, 0, 0, 1);
 
-	std::string vertexShader;
-	if (FileLoader::fileToString("res/shaders/defaultVertexShader.glsl", vertexShader))
-		std::cout << "Failed to load the default vertex shader" << std::endl;
-	else
-		std::cout << vertexShader << std::endl;
+	std::string vertexShaderSource, fragmentShaderSource;
+	uint8_t result = 0;
+	result |= FileLoader::fileToString("res/shaders/defaultVertexShader.glsl", vertexShaderSource);
+	result |= FileLoader::fileToString("res/shaders/defaultFragmentShader.glsl", fragmentShaderSource);
+	if (result != FileLoader::OK) {
+		std::cout << "Failed to find shaders!" << std::endl;
+		return -1;
+	}
+
+	GLuint prog = glCreateProgram();
+
+	GLuint vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
+	GLuint fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
+
+	// Create the vertex shader
+	const char* sourcePtr = vertexShaderSource.c_str();
+	GLint length = vertexShaderSource.size();
+	glShaderSource(vertexShaderID, 1, &sourcePtr, &length);
+	glCompileShader(vertexShaderID);
+	GLint compiled = 0;
+	glGetShaderiv(vertexShaderID, GL_COMPILE_STATUS, &compiled);
+	if (!compiled) {
+		std::cout << "Failed to compile the vertex shader" << std::endl;
+	}
+
+	// Create the fragment shader
+	sourcePtr = fragmentShaderSource.c_str();
+	length = fragmentShaderSource.size();
+	glShaderSource(fragmentShaderID, 1, &sourcePtr, &length);
+	glCompileShader(fragmentShaderID);
+	glGetShaderiv(fragmentShaderID, GL_COMPILE_STATUS, &compiled);
+	if (!compiled) {
+		std::cout << "Failed to compile the vertex shader" << std::endl;
+	}
+
+
+	glAttachShader(prog, vertexShaderID);
+	glAttachShader(prog, fragmentShaderID);
+
+	glLinkProgram(prog);
+
+	glUseProgram(prog);
 
 	FPSCounter fps;
 	while (window.isOpen()) {
