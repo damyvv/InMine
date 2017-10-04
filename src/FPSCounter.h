@@ -6,21 +6,21 @@
 class FPSCounter
 {
 private:
-	clock_t m_Start;
+	time_t m_Start;
 	uint16_t m_Frames;
 public:
 	FPSCounter() {
-		m_Start = clock();
+		m_Start = time(NULL);
 		m_Frames = 0;
 	}
 
 	void tick() {
 		m_Frames++;
-		clock_t now = clock();
-		clock_t duration = now - m_Start;
-		if ((float)duration / CLOCKS_PER_SEC >= 1.0) {
+		time_t now = time(NULL);
+		time_t duration = now - m_Start;
+		if ((float)duration >= 1.0) {
 			std::cout << "FPS: " << m_Frames << std::endl;
-			m_Start += 1 * CLOCKS_PER_SEC;
+			m_Start += 1;
 			m_Frames = 0;
 		}
 	}
