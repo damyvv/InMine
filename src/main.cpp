@@ -15,23 +15,29 @@
 #include "graphics/buffers/StaticArrayBuffer.h"
 
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
+#include <chrono>
+
+#define WIDTH 800
+#define HEIGHT 600
 
 int main() {
 	std::cout << "InMine version: " << InMine_VERSION_STRING << std::endl;
 	std::cout << "GLFW version: " << GLFW_VERSION_MAJOR << "." << GLFW_VERSION_MINOR << "." << GLFW_VERSION_REVISION << std::endl;
 
 	glm::vec2 vertices[] = {
-		{-0.5, 0.5},
-		{0.5, -0.5},
-		{-0.5, -0.5},
-		{-0.5, 0.5},
-		{0.5, 0.5},
-		{0.5, -0.5},
+		{0, 100},
+		{100, 0},
+		{0, 0},
+		{0, 100},
+		{100, 100},
+		{100, 0},
 	};
 
 	std::string title = "InMine ";
 	title += InMine_VERSION_STRING;
-	Window window(800, 600, false, title.c_str());
+	Window window(WIDTH, HEIGHT, false, title.c_str());
 	if (!window.isOpen()) {
 		std::cout << "Failed to create window: " << window.getErrorMessage() << std::endl;
 		getchar();
@@ -59,9 +65,27 @@ int main() {
 	if (program.isValid())
 		program.start();
 
+	glm::mat4 modelMatrix(1);
+	GLuint modelMatrix_location = glGetUniformLocation(program.getProgramID(), "modelMatrix");
+	glUniformMatrix4fv(modelMatrix_location, 1, GL_FALSE, &modelMatrix[0][0]);
+
+	glm::mat4 projectionMatrix = glm::ortho(0.0f, (float) WIDTH, 0.0f, (float) HEIGHT, -1.0f, 1000.0f);
+	GLuint projectionMatrix_location = glGetUniformLocation(program.getProgramID(), "projectionMatrix");
+	glUniformMatrix4fv(projectionMatrix_location, 1, GL_FALSE, &projectionMatrix[0][0]);
+
 	FPSCounter fps;
 	while (window.isOpen()) {
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		auto now = std::chrono::high_resolution_clock::now();
+		auto duration = now.time_since_epoch();
+		auto millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+
+		modelMatrix = glm::mat4(1);
+		modelMatrix = glm::translate(modelMatrix, glm::vec3(100, 100, 0));
+		modelMatrix = glm::rotate(modelMatrix, (float) millis / 1000.0f, glm::vec3(0, 0, 1));
+		modelMatrix = glm::translate(modelMatrix, glm::vec3(-50, -50, 0));
+		glUniformMatrix4fv(modelMatrix_location, 1, GL_FALSE, &modelMatrix[0][0]);
 
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
