@@ -14,17 +14,19 @@
 
 #include "graphics/buffers/StaticArrayBuffer.h"
 
+#include <glm/glm.hpp>
+
 int main() {
 	std::cout << "InMine version: " << InMine_VERSION_STRING << std::endl;
 	std::cout << "GLFW version: " << GLFW_VERSION_MAJOR << "." << GLFW_VERSION_MINOR << "." << GLFW_VERSION_REVISION << std::endl;
 
-	float vertices[] = {
-		-0.5, 0.5,
-		0.5, -0.5,
-		-0.5, -0.5,
-		-0.5, 0.5,
-		0.5, 0.5,
-		0.5, -0.5,
+	glm::vec2 vertices[] = {
+		{-0.5, 0.5},
+		{0.5, -0.5},
+		{-0.5, -0.5},
+		{-0.5, 0.5},
+		{0.5, 0.5},
+		{0.5, -0.5},
 	};
 
 	std::string title = "InMine ";
@@ -39,8 +41,8 @@ int main() {
 	std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
 
 	glEnableVertexAttribArray(0);
-	StaticArrayBuffer<float> buffer;
-	buffer.storeData(std::vector<float>(vertices, vertices + sizeof(vertices) / sizeof(float)));
+	StaticArrayBuffer<glm::vec2> buffer;
+	buffer.storeData(std::vector<glm::vec2>(vertices, vertices + sizeof(vertices) / sizeof(float)));
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
 	glClearColor(1, 0, 0, 1);
