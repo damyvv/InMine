@@ -3,8 +3,12 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
 #include <iostream>
 #include <stdio.h>
+#include <chrono>
 
 #include "graphics/Window.h"
 #include "utils/FPSCounter.h"
@@ -13,11 +17,8 @@
 #include "graphics/shaders/Shader.h"
 
 #include "graphics/buffers/StaticArrayBuffer.h"
+#include "graphics/buffers/VertexArray.h"
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-
-#include <chrono>
 
 #define WIDTH 800
 #define HEIGHT 600
@@ -46,12 +47,15 @@ int main() {
 
 	std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
 
-	glEnableVertexAttribArray(0);
+	VertexArray vao;
+	vao.bind();
 	StaticArrayBuffer<glm::vec2> buffer;
 	buffer.storeData(std::vector<glm::vec2>(vertices, vertices + sizeof(vertices) / sizeof(float)));
+
+	glEnableVertexArrayAttrib(vao.getID(), 0);
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
-	glClearColor(1, 0, 0, 1);
+	glClearColor(84.0 / 255.0, 149.0 / 255.0, 255.0 / 255.0, 1);
 
 	Shader* vertexShader = new Shader("res/shaders/defaultVertexShader.glsl", GL_VERTEX_SHADER);
 	Shader* fragmentShader = new Shader("res/shaders/defaultFragmentShader.glsl", GL_FRAGMENT_SHADER);
