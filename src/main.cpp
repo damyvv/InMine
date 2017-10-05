@@ -69,7 +69,7 @@ int main() {
 	GLuint modelMatrix_location = glGetUniformLocation(program.getProgramID(), "modelMatrix");
 	glUniformMatrix4fv(modelMatrix_location, 1, GL_FALSE, &modelMatrix[0][0]);
 
-	glm::mat4 projectionMatrix = glm::ortho(0.0f, (float) WIDTH, 0.0f, (float) HEIGHT, -1.0f, 1000.0f);
+	glm::mat4 projectionMatrix = glm::ortho(0.0f, (float) window.getWidth(), 0.0f, (float) window.getHeight(), -1.0f, 1000.0f);
 	GLuint projectionMatrix_location = glGetUniformLocation(program.getProgramID(), "projectionMatrix");
 	glUniformMatrix4fv(projectionMatrix_location, 1, GL_FALSE, &projectionMatrix[0][0]);
 
@@ -82,7 +82,7 @@ int main() {
 		auto millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
 
 		modelMatrix = glm::mat4(1);
-		modelMatrix = glm::translate(modelMatrix, glm::vec3(100, 100, 0));
+		modelMatrix = glm::translate(modelMatrix, glm::vec3(200 + 100*sin(millis / 500.0), 200 + 100*cos(millis / 500.0), 0));
 		modelMatrix = glm::rotate(modelMatrix, (float) millis / 1000.0f, glm::vec3(0, 0, 1));
 		modelMatrix = glm::translate(modelMatrix, glm::vec3(-50, -50, 0));
 		glUniformMatrix4fv(modelMatrix_location, 1, GL_FALSE, &modelMatrix[0][0]);

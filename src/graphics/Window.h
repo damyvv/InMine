@@ -20,4 +20,7 @@ public:
 
 	inline bool isOpen() const { return m_IsOpen; }
 	const std::string& getErrorMessage() const { return m_Error; }
+
+	inline unsigned int getWidth() const { return m_Width; }
+	inline unsigned int getHeight() const { return m_Height; }
 };
