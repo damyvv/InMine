@@ -53,6 +53,16 @@ file(GLOB_RECURSE InMine_SOURCE
 	"src/*.h"
 )
 
+if (MSVC)
+	message(STATUS "Generating visual studio filters...")
+	foreach(source IN LISTS InMine_SOURCE)
+		file(RELATIVE_PATH path "${PROJECT_SOURCE_DIR}/src" ${source})
+		get_filename_component(source_path "${path}" PATH)
+		string(REPLACE "/" "\\" source_path_msvc "${source_path}")
+		source_group("${source_path_msvc}" FILES "${source}")
+	endforeach()
+endif()
+
 # Copy resources
 message(STATUS "Coping resources...")
 file(COPY "res" DESTINATION "${CMAKE_BINARY_DIR}")
