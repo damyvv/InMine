@@ -11,6 +11,6 @@ public:
 
 	void storeData(const std::vector<T>& data) override {
 		this->bind();
-		glBufferData(m_Target, data.size() * sizeof(T), &data[0], GL_STATIC_DRAW);
+		glBufferData(this->m_Target, data.size() * sizeof(T), &data[0], GL_STATIC_DRAW);
 	}
 };
