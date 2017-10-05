@@ -19,6 +19,8 @@
 #include "graphics/buffers/StaticArrayBuffer.h"
 #include "graphics/buffers/VertexArray.h"
 
+#include "graphics/shaders/DefaultShaderProgram.h"
+
 
 #define WIDTH 800
 #define HEIGHT 600
@@ -57,24 +59,19 @@ int main() {
 
 	glClearColor(84.0 / 255.0, 149.0 / 255.0, 255.0 / 255.0, 1);
 
-	Shader* vertexShader = new Shader("res/shaders/defaultVertexShader.glsl", GL_VERTEX_SHADER);
-	Shader* fragmentShader = new Shader("res/shaders/defaultFragmentShader.glsl", GL_FRAGMENT_SHADER);
-	ShaderProgram program;
-	program.attachShader(vertexShader);
-	program.attachShader(fragmentShader);
-	program.linkProgram();
-	delete vertexShader;
-	delete fragmentShader;
+	ShaderProgram* program = new DefaultShaderProgram();
 
-	if (program.isValid())
-		program.start();
+	if (program->isValid())
+		program->start();
+	else
+		return -1;
 
 	glm::mat4 modelMatrix(1);
-	GLuint modelMatrix_location = glGetUniformLocation(program.getProgramID(), "modelMatrix");
+	GLuint modelMatrix_location = glGetUniformLocation(program->getProgramID(), "modelMatrix");
 	glUniformMatrix4fv(modelMatrix_location, 1, GL_FALSE, &modelMatrix[0][0]);
 
 	glm::mat4 projectionMatrix = glm::ortho(0.0f, (float) window.getWidth(), 0.0f, (float) window.getHeight(), -1.0f, 1000.0f);
-	GLuint projectionMatrix_location = glGetUniformLocation(program.getProgramID(), "projectionMatrix");
+	GLuint projectionMatrix_location = glGetUniformLocation(program->getProgramID(), "projectionMatrix");
 	glUniformMatrix4fv(projectionMatrix_location, 1, GL_FALSE, &projectionMatrix[0][0]);
 
 	FPSCounter fps;
