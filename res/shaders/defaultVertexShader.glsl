@@ -1,4 +1,6 @@
-in vec2 pos;
+#version 330
+
+layout(location = 0) in vec2 pos;
 
 uniform mat4 modelMatrix;
 uniform mat4 projectionMatrix;
