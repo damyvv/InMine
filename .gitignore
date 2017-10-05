@@ -16,3 +16,6 @@ CTestTestfile.cmake
 
 # Generated CMake config file
 include/InMineConfig.h
+
+# Visual studio
+/.vs
