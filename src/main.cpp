@@ -17,6 +17,7 @@
 #include "graphics/shaders/Shader.h"
 
 #include "graphics/buffers/StaticArrayBuffer.h"
+#include "graphics/buffers/StaticIndicesBuffer.h"
 #include "graphics/buffers/VertexArray.h"
 
 #include "graphics/shaders/DefaultShaderProgram.h"
@@ -31,13 +32,16 @@ int main() {
 	std::cout << "InMine version: " << InMine_VERSION_STRING << std::endl;
 	std::cout << "GLFW version: " << GLFW_VERSION_MAJOR << "." << GLFW_VERSION_MINOR << "." << GLFW_VERSION_REVISION << std::endl;
 
-	VertexData3D vertices[] = {
-		{ {-0.5f,  0.5f, -0.5f }, { 1, 0, 0, 1 } },
-		{ { 0.5f, -0.5f, -0.5f }, { 0, 1, 0, 1 } },
-		{ {-0.5f, -0.5f, -0.5f }, { 0, 0, 1, 1 } },
+	std::vector<VertexData3D> vertices = {
 		{ {-0.5f,  0.5f, -0.5f }, { 1, 0, 0, 1 } },
 		{ { 0.5f,  0.5f, -0.5f }, { 1, 1, 1, 1 } },
 		{ { 0.5f, -0.5f, -0.5f }, { 0, 1, 0, 1 } },
+		{ {-0.5f, -0.5f, -0.5f }, { 0, 0, 1, 1 } },
+	};
+
+	std::vector<GLubyte> indices = {
+		0, 1, 2,
+		2, 3, 0,
 	};
 
 	std::string title = "InMine ";
@@ -54,13 +58,18 @@ int main() {
 	VertexArray vao;
 	vao.bind();
 	StaticArrayBuffer<VertexData3D> buffer;
-	buffer.storeData(std::vector<VertexData3D>(vertices, vertices + sizeof(vertices) / sizeof(VertexData3D)));
+	buffer.storeData(vertices);
+
+	StaticIndicesBuffer<GLubyte> ibo;
+	ibo.storeData(indices);
 
 	glEnableVertexArrayAttrib(vao.getID(), 0);
 	glEnableVertexArrayAttrib(vao.getID(), 1);
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData3D), (void*) offsetof(VertexData3D, position));
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(VertexData3D), (void*) offsetof(VertexData3D, color));
+
+	
 
 	glClearColor(84.0f / 255.0f, 149.0f / 255.0f, 255.0f / 255.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
@@ -91,7 +100,7 @@ int main() {
 		modelMatrix = glm::rotate(modelMatrix, (float)millis / 1000.0f, glm::vec3(0, 1, 0));
 		program->setModelMatrix(modelMatrix);
 
-		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_BYTE, 0);
 
 		window.update();
 
