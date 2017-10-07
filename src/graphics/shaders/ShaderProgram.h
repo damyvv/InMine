@@ -15,10 +15,13 @@ public:
 	ShaderProgram();
 	virtual ~ShaderProgram() {};
 
-	void attachShader(const Shader *shader);
 	inline void start() const { glUseProgram(m_ProgramID); }
 	inline GLuint getProgramID() const { return m_ProgramID; }
 	inline bool isValid() const { return m_Valid; }
 
+protected:
 	void linkProgram();
+	void attachShader(const Shader *shader);
+
+	GLint getUniformLocation(const char* name);
 };

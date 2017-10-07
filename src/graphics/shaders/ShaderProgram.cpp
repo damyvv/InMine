@@ -40,3 +40,11 @@ void ShaderProgram::linkProgram() {
 	}
 	m_Valid = true;
 }
+
+GLint ShaderProgram::getUniformLocation(const char* name) {
+	GLint loc = glGetUniformLocation(m_ProgramID, name);
+	if (loc < 0) {
+		std::cout << "Failed to get uniform location for \"" << name << "\"" << std::endl;
+	}
+	return loc;
+}

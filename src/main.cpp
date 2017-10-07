@@ -59,7 +59,7 @@ int main() {
 
 	glClearColor(84.0 / 255.0, 149.0 / 255.0, 255.0 / 255.0, 1);
 
-	ShaderProgram* program = new DefaultShaderProgram();
+	DefaultShaderProgram* program = new DefaultShaderProgram();
 
 	if (program->isValid())
 		program->start();
@@ -67,12 +67,10 @@ int main() {
 		return -1;
 
 	glm::mat4 modelMatrix(1);
-	GLuint modelMatrix_location = glGetUniformLocation(program->getProgramID(), "modelMatrix");
-	glUniformMatrix4fv(modelMatrix_location, 1, GL_FALSE, &modelMatrix[0][0]);
+	program->setModelMatrix(modelMatrix);
 
 	glm::mat4 projectionMatrix = glm::ortho(0.0f, (float) window.getWidth(), 0.0f, (float) window.getHeight(), -1.0f, 1000.0f);
-	GLuint projectionMatrix_location = glGetUniformLocation(program->getProgramID(), "projectionMatrix");
-	glUniformMatrix4fv(projectionMatrix_location, 1, GL_FALSE, &projectionMatrix[0][0]);
+	program->setProjectionMatrix(projectionMatrix);
 
 	FPSCounter fps;
 	while (window.isOpen()) {
@@ -86,7 +84,7 @@ int main() {
 		modelMatrix = glm::translate(modelMatrix, glm::vec3(200 + 100*sin(millis / 500.0), 200 + 100*cos(millis / 500.0), 0));
 		modelMatrix = glm::rotate(modelMatrix, (float) millis / 1000.0f, glm::vec3(0, 0, 1));
 		modelMatrix = glm::translate(modelMatrix, glm::vec3(-50, -50, 0));
-		glUniformMatrix4fv(modelMatrix_location, 1, GL_FALSE, &modelMatrix[0][0]);
+		program->setModelMatrix(modelMatrix);
 
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 

@@ -13,8 +13,15 @@ DefaultShaderProgram::DefaultShaderProgram() {
 
 	delete vertexShader;
 	delete fragmentShader;
+
+	if (this->isValid()) this->getMatrixLocations();
 }
 
 DefaultShaderProgram::~DefaultShaderProgram() {
 
+}
+
+void DefaultShaderProgram::getMatrixLocations() {
+	m_ModelMatrixLocation = getUniformLocation("modelMatrix");
+	m_ProjectionMatrixLocation = getUniformLocation("projectionMatrix");
 }
