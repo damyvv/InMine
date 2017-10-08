@@ -26,6 +26,8 @@
 
 #include "graphics/renderables/Renderable3D.h"
 
+#include "graphics/renderables/Cube.h"
+
 
 #define WIDTH 800
 #define HEIGHT 600
@@ -97,7 +99,14 @@ int main() {
 
 	std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
 
-	Renderable3D* r1 = new Renderable3D(vertices, indices);
+	Cube::init();
+
+	Cube* c0 = new Cube();
+	Cube* c1 = new Cube();
+
+	delete c0;
+	delete c1;
+
 
 	glClearColor(84.0f / 255.0f, 149.0f / 255.0f, 255.0f / 255.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
@@ -130,13 +139,15 @@ int main() {
 		modelMatrix = glm::rotate(modelMatrix, (float) millis / 1000.0f, glm::vec3(1, 1, 0));
 		program->setModelMatrix(modelMatrix);
 
-		r1->bind();
-		glDrawElements(GL_TRIANGLES, r1->getIndicesCount(), GL_UNSIGNED_BYTE, 0);
+//		r1->bind();
+//		glDrawElements(GL_TRIANGLES, r1->getIndicesCount(), GL_UNSIGNED_BYTE, 0);
 
 		window.update();
 
 		fps.tick();
 	}
+
+	Cube::cleanup();
 
 	return 0;
 }
