@@ -28,6 +28,8 @@
 
 #include "graphics/renderables/Cube.h"
 
+#include "graphics/renderer/Default3DRenderer.h"
+
 
 #define WIDTH 800
 #define HEIGHT 600
@@ -55,6 +57,7 @@ int main() {
 	glCullFace(GL_BACK);
 
 	DefaultShaderProgram* program = new DefaultShaderProgram();
+	Renderer<const IRenderable3D*>* renderer = new Default3DRenderer();
 
 	if (program->isValid())
 		program->start();
@@ -80,8 +83,8 @@ int main() {
 		modelMatrix = glm::rotate(modelMatrix, (float) millis / 1000.0f, glm::vec3(1, 1, 0));
 		program->setModelMatrix(modelMatrix);
 
-		c0.getRenderable3D()->bind();
-		glDrawElements(GL_TRIANGLES, c0.getRenderable3D()->getIndicesCount(), GL_UNSIGNED_BYTE, 0);
+		renderer->addToRenderQueue(&c0);
+		renderer->render();
 
 		window.update();
 
