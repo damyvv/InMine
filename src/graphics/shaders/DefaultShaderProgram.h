@@ -12,8 +12,8 @@ public:
 	DefaultShaderProgram();
 	~DefaultShaderProgram();
 
-	inline void setModelMatrix(glm::mat4& modelMatrix) const { loadUniformMat4(m_ModelMatrixLocation, modelMatrix); };
-	inline void setProjectionMatrix(glm::mat4& projectionMatrix) const { loadUniformMat4(m_ProjectionMatrixLocation, projectionMatrix); };
+	inline void setModelMatrix(const glm::mat4& modelMatrix) const { loadUniformMat4(m_ModelMatrixLocation, modelMatrix); };
+	inline void setProjectionMatrix(const glm::mat4& projectionMatrix) const { loadUniformMat4(m_ProjectionMatrixLocation, projectionMatrix); };
 
 private:
 	void getMatrixLocations();

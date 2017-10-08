@@ -1,6 +1,7 @@
 #include "Cube.h"
 
 Cube::Cube()
+	: m_ModelMatrix(1)
 {
 	if (_cubeCount == 0) {
 		_sharedMesh = new Renderable3D(_cubeVertices, _cubeIndices);

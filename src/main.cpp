@@ -49,15 +49,15 @@ int main() {
 
 	std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
 
-	Cube c0;
-
 	glClearColor(84.0f / 255.0f, 149.0f / 255.0f, 255.0f / 255.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 
 	DefaultShaderProgram* program = new DefaultShaderProgram();
-	Renderer<const IRenderable3D*>* renderer = new Default3DRenderer();
+	Renderer<const IRenderable3D*>* renderer = new Default3DRenderer(program);
+
+	Cube c0;
 
 	if (program->isValid())
 		program->start();
@@ -81,7 +81,7 @@ int main() {
 		modelMatrix = glm::mat4(1);
 		modelMatrix = glm::translate(modelMatrix, glm::vec3(0, 0, -5));
 		modelMatrix = glm::rotate(modelMatrix, (float) millis / 1000.0f, glm::vec3(1, 1, 0));
-		program->setModelMatrix(modelMatrix);
+		c0.setModelMatrix(modelMatrix);
 
 		renderer->addToRenderQueue(&c0);
 		renderer->render();
