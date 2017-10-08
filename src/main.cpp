@@ -26,6 +26,8 @@
 
 #include "graphics/renderables/Renderable3D.h"
 
+#include "graphics/renderables/Cube.h"
+
 
 #define WIDTH 800
 #define HEIGHT 600
@@ -33,58 +35,6 @@
 int main() {
 	std::cout << "InMine version: " << InMine_VERSION_STRING << std::endl;
 	std::cout << "GLFW version: " << GLFW_VERSION_MAJOR << "." << GLFW_VERSION_MINOR << "." << GLFW_VERSION_REVISION << std::endl;
-
-	std::vector<VertexData3D> vertices = {
-		// FRONT
-		{ { -0.5f, -0.5f,  0.5f }, { 1, 0, 0, 1 } },
-		{ {  0.5f, -0.5f,  0.5f }, { 1, 0, 0, 1 } },
-		{ {  0.5f,  0.5f,  0.5f }, { 1, 0, 0, 1 } },
-		{ { -0.5f,  0.5f,  0.5f }, { 1, 0, 0, 1 } },
-
-		// BACK
-		{ { -0.5f,  0.5f, -0.5f }, { 0, 1, 0, 1 } },
-		{ {  0.5f,  0.5f, -0.5f }, { 0, 1, 0, 1 } },
-		{ {  0.5f, -0.5f, -0.5f }, { 0, 1, 0, 1 } },
-		{ { -0.5f, -0.5f, -0.5f }, { 0, 1, 0, 1 } },
-		
-		// LEFT
-		{ { -0.5f, -0.5f, -0.5f }, { 0, 0, 1, 1 } },
-		{ { -0.5f, -0.5f,  0.5f }, { 0, 0, 1, 1 } },
-		{ { -0.5f,  0.5f,  0.5f }, { 0, 0, 1, 1 } },
-		{ { -0.5f,  0.5f, -0.5f }, { 0, 0, 1, 1 } },
-
-		// RIGHT
-		{ {  0.5f,  0.5f, -0.5f }, { 0, 1, 1, 1 } },
-		{ {  0.5f,  0.5f,  0.5f }, { 0, 1, 1, 1 } },
-		{ {  0.5f, -0.5f,  0.5f }, { 0, 1, 1, 1 } },
-		{ {  0.5f, -0.5f, -0.5f }, { 0, 1, 1, 1 } },
-		
-		// TOP
-		{ { -0.5f,  0.5f,  0.5f }, { 1, 1, 0, 1 } },
-		{ {  0.5f,  0.5f,  0.5f }, { 1, 1, 0, 1 } },
-		{ {  0.5f,  0.5f, -0.5f }, { 1, 1, 0, 1 } },
-		{ { -0.5f,  0.5f, -0.5f }, { 1, 1, 0, 1 } },
-
-		// BOTTOM
-		{ { -0.5f, -0.5f, -0.5f }, { 1, 0, 1, 1 } },
-		{ {  0.5f, -0.5f, -0.5f }, { 1, 0, 1, 1 } },
-		{ {  0.5f, -0.5f,  0.5f }, { 1, 0, 1, 1 } },
-		{ { -0.5f, -0.5f,  0.5f }, { 1, 0, 1, 1 } },
-	};
-
-#define SIDES 6
-	std::vector<GLubyte> indices;
-	indices.resize(3 * 2 * SIDES);
-	for (int i = 0; i < SIDES; i++) {
-		int j = i * 4;
-		indices[i*6  ] = j;
-		indices[i*6+1] = j+1;
-		indices[i*6+2] = j+2;
-
-		indices[i*6+3] = j+2;
-		indices[i*6+4] = j+3;
-		indices[i*6+5] = j;
-	}
 
 	std::string title = "InMine ";
 	title += InMine_VERSION_STRING;
@@ -97,7 +47,7 @@ int main() {
 
 	std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
 
-	Renderable3D* r1 = new Renderable3D(vertices, indices);
+	Cube c0;
 
 	glClearColor(84.0f / 255.0f, 149.0f / 255.0f, 255.0f / 255.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
@@ -130,8 +80,8 @@ int main() {
 		modelMatrix = glm::rotate(modelMatrix, (float) millis / 1000.0f, glm::vec3(1, 1, 0));
 		program->setModelMatrix(modelMatrix);
 
-		r1->bind();
-		glDrawElements(GL_TRIANGLES, r1->getIndicesCount(), GL_UNSIGNED_BYTE, 0);
+		c0.getRenderable3D()->bind();
+		glDrawElements(GL_TRIANGLES, c0.getRenderable3D()->getIndicesCount(), GL_UNSIGNED_BYTE, 0);
 
 		window.update();
 
