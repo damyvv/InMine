@@ -3,8 +3,6 @@
 #include "../buffers/StaticArrayBuffer.h"
 #include "../buffers/StaticIndicesBuffer.h"
 
-#include <iostream>
-
 Renderable3D::Renderable3D(const std::vector<VertexData3D>& vertices, const std::vector<GLubyte>& indices)
 {
 	m_VAO = new VertexArray();
@@ -26,13 +24,10 @@ Renderable3D::Renderable3D(const std::vector<VertexData3D>& vertices, const std:
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData3D), (void*)offsetof(VertexData3D, position));
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(VertexData3D), (void*)offsetof(VertexData3D, color));
-
-	std::cout << "Renderable3D created!" << std::endl;
 }
 
 Renderable3D::~Renderable3D() {
 	delete m_VBO;
 	delete m_IBO;
 	delete m_VAO;
-	std::cout << "Renderable3D died!" << std::endl;
 }

@@ -99,14 +99,8 @@ int main() {
 
 	std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
 
-	Cube::init();
-
-	Cube* c0 = new Cube();
-	Cube* c1 = new Cube();
-
-	delete c0;
-	delete c1;
-
+	Cube c0;
+	Cube c1;
 
 	glClearColor(84.0f / 255.0f, 149.0f / 255.0f, 255.0f / 255.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
@@ -146,8 +140,6 @@ int main() {
 
 		fps.tick();
 	}
-
-	Cube::cleanup();
 
 	return 0;
 }

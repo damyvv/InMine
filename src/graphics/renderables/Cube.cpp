@@ -2,21 +2,23 @@
 
 Cube::Cube()
 {
+	if (_cubeCount == 0) {
+		_sharedMesh = new Renderable3D(_cubeVertices, _cubeIndices);
+	}
+	_cubeCount++;
 }
 
 Cube::~Cube()
 {
-}
-
-void Cube::init() {
-	_sharedMesh = new Renderable3D(_cubeVertices, _cubeIndices);
-}
-
-void Cube::cleanup() {
-	delete _sharedMesh;
+	_cubeCount--;
+	if (_cubeCount == 0) {
+		delete _sharedMesh;
+	}
 }
 
 Renderable3D* Cube::_sharedMesh = nullptr;
+
+unsigned long Cube::_cubeCount = 0;
 
 const std::vector<VertexData3D> Cube::_cubeVertices({
 	// FRONT
