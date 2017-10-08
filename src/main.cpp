@@ -58,6 +58,8 @@ int main() {
 	Renderer<const IRenderable3D*>* renderer = new Default3DRenderer(program);
 
 	Cube c0;
+	Cube c1;
+	c1.setModelMatrix(glm::translate(glm::mat4(1), glm::vec3(-1.5, 0, -5)));
 
 	if (program->isValid())
 		program->start();
@@ -84,6 +86,7 @@ int main() {
 		c0.setModelMatrix(modelMatrix);
 
 		renderer->addToRenderQueue(&c0);
+		renderer->addToRenderQueue(&c1);
 		renderer->render();
 
 		window.update();
