@@ -14,4 +14,6 @@ private:
 public:
 	Cube();
 	~Cube();
+
+	inline const Renderable3D* getRenderable3D() const { return _sharedMesh; }
 };
