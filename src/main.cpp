@@ -24,6 +24,8 @@
 
 #include "graphics/renderables/VertexData.h"
 
+#include "graphics/renderables/Renderable3D.h"
+
 
 #define WIDTH 800
 #define HEIGHT 600
@@ -95,21 +97,7 @@ int main() {
 
 	std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
 
-	VertexArray vao;
-	vao.bind();
-	StaticArrayBuffer<VertexData3D> buffer;
-	buffer.storeData(vertices);
-
-	StaticIndicesBuffer<GLubyte> ibo;
-	ibo.storeData(indices);
-
-	glEnableVertexArrayAttrib(vao.getID(), 0);
-	glEnableVertexArrayAttrib(vao.getID(), 1);
-
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData3D), (void*) offsetof(VertexData3D, position));
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(VertexData3D), (void*) offsetof(VertexData3D, color));
-
-	
+	Renderable3D* r1 = new Renderable3D(vertices, indices);
 
 	glClearColor(84.0f / 255.0f, 149.0f / 255.0f, 255.0f / 255.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
@@ -142,7 +130,8 @@ int main() {
 		modelMatrix = glm::rotate(modelMatrix, (float) millis / 1000.0f, glm::vec3(1, 1, 0));
 		program->setModelMatrix(modelMatrix);
 
-		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_BYTE, 0);
+		r1->bind();
+		glDrawElements(GL_TRIANGLES, r1->getIndicesCount(), GL_UNSIGNED_BYTE, 0);
 
 		window.update();
 
