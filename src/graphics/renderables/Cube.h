@@ -1,10 +1,11 @@
 #pragma once
 
 #include "Renderable3D.h"
+#include "IRenderable3D.h"
 
 #include <memory>
 
-class Cube
+class Cube : public IRenderable3D
 {
 private:
 	static Renderable3D* _sharedMesh;
@@ -15,5 +16,5 @@ public:
 	Cube();
 	~Cube();
 
-	inline const Renderable3D* getRenderable3D() const { return _sharedMesh; }
+	inline const Renderable3D* getRenderable3D() const override { return _sharedMesh; }
 };
