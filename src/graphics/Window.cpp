@@ -7,6 +7,7 @@ Window::Window(unsigned int width, unsigned int height, bool fullscreen, std::st
 		m_Title(title),
 		m_IsOpen(false) {
 
+
 	if (!glfwInit()) {
 		m_Error = "Failed to initialize GLFW";
 		return;
@@ -20,6 +21,7 @@ Window::Window(unsigned int width, unsigned int height, bool fullscreen, std::st
 
 	glfwMakeContextCurrent(m_Window);
 
+	glewExperimental = true;
 	int result = glewInit();
 	if (result) {
 		m_Error = "Fatal error! Unexpected result from glewInit()";
