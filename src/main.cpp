@@ -33,16 +33,56 @@ int main() {
 	std::cout << "GLFW version: " << GLFW_VERSION_MAJOR << "." << GLFW_VERSION_MINOR << "." << GLFW_VERSION_REVISION << std::endl;
 
 	std::vector<VertexData3D> vertices = {
-		{ {-0.5f,  0.5f, -0.5f }, { 1, 0, 0, 1 } },
-		{ { 0.5f,  0.5f, -0.5f }, { 1, 1, 1, 1 } },
-		{ { 0.5f, -0.5f, -0.5f }, { 0, 1, 0, 1 } },
-		{ {-0.5f, -0.5f, -0.5f }, { 0, 0, 1, 1 } },
+		// FRONT
+		{ { -0.5f, -0.5f,  0.5f }, { 1, 0, 0, 1 } },
+		{ {  0.5f, -0.5f,  0.5f }, { 1, 0, 0, 1 } },
+		{ {  0.5f,  0.5f,  0.5f }, { 1, 0, 0, 1 } },
+		{ { -0.5f,  0.5f,  0.5f }, { 1, 0, 0, 1 } },
+
+		// BACK
+		{ { -0.5f,  0.5f, -0.5f }, { 0, 1, 0, 1 } },
+		{ {  0.5f,  0.5f, -0.5f }, { 0, 1, 0, 1 } },
+		{ {  0.5f, -0.5f, -0.5f }, { 0, 1, 0, 1 } },
+		{ { -0.5f, -0.5f, -0.5f }, { 0, 1, 0, 1 } },
+		
+		// LEFT
+		{ { -0.5f, -0.5f, -0.5f }, { 0, 0, 1, 1 } },
+		{ { -0.5f, -0.5f,  0.5f }, { 0, 0, 1, 1 } },
+		{ { -0.5f,  0.5f,  0.5f }, { 0, 0, 1, 1 } },
+		{ { -0.5f,  0.5f, -0.5f }, { 0, 0, 1, 1 } },
+
+		// RIGHT
+		{ {  0.5f,  0.5f, -0.5f }, { 0, 1, 1, 1 } },
+		{ {  0.5f,  0.5f,  0.5f }, { 0, 1, 1, 1 } },
+		{ {  0.5f, -0.5f,  0.5f }, { 0, 1, 1, 1 } },
+		{ {  0.5f, -0.5f, -0.5f }, { 0, 1, 1, 1 } },
+		
+		// TOP
+		{ { -0.5f,  0.5f,  0.5f }, { 1, 1, 0, 1 } },
+		{ {  0.5f,  0.5f,  0.5f }, { 1, 1, 0, 1 } },
+		{ {  0.5f,  0.5f, -0.5f }, { 1, 1, 0, 1 } },
+		{ { -0.5f,  0.5f, -0.5f }, { 1, 1, 0, 1 } },
+
+		// BOTTOM
+		{ { -0.5f, -0.5f, -0.5f }, { 1, 0, 1, 1 } },
+		{ {  0.5f, -0.5f, -0.5f }, { 1, 0, 1, 1 } },
+		{ {  0.5f, -0.5f,  0.5f }, { 1, 0, 1, 1 } },
+		{ { -0.5f, -0.5f,  0.5f }, { 1, 0, 1, 1 } },
 	};
 
-	std::vector<GLubyte> indices = {
-		0, 1, 2,
-		2, 3, 0,
-	};
+#define SIDES 6
+	std::vector<GLubyte> indices;
+	indices.resize(3 * 2 * SIDES);
+	for (int i = 0; i < SIDES; i++) {
+		int j = i * 4;
+		indices[i*6  ] = j;
+		indices[i*6+1] = j+1;
+		indices[i*6+2] = j+2;
+
+		indices[i*6+3] = j+2;
+		indices[i*6+4] = j+3;
+		indices[i*6+5] = j;
+	}
 
 	std::string title = "InMine ";
 	title += InMine_VERSION_STRING;
@@ -73,6 +113,8 @@ int main() {
 
 	glClearColor(84.0f / 255.0f, 149.0f / 255.0f, 255.0f / 255.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
 
 	DefaultShaderProgram* program = new DefaultShaderProgram();
 
@@ -97,7 +139,7 @@ int main() {
 
 		modelMatrix = glm::mat4(1);
 		modelMatrix = glm::translate(modelMatrix, glm::vec3(0, 0, -5));
-		modelMatrix = glm::rotate(modelMatrix, (float)millis / 1000.0f, glm::vec3(0, 1, 0));
+		modelMatrix = glm::rotate(modelMatrix, (float) millis / 1000.0f, glm::vec3(1, 1, 0));
 		program->setModelMatrix(modelMatrix);
 
 		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_BYTE, 0);
