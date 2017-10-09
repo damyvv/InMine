@@ -2,14 +2,15 @@
 
 #include <string>
 #include <GL/glew.h>
-#include <GLFW/glfw3.h>
+#include <SDL.h>
 
 class Window {
 private:
 	unsigned int m_Width, m_Height;
 	bool m_Fullscreen;
 	std::string m_Title;
-	GLFWwindow *m_Window;
+	SDL_Window *m_Window;
+	SDL_GLContext m_Context;
 	bool m_IsOpen;
 	std::string m_Error;
 public:

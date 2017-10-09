@@ -1,14 +1,10 @@
 #include "Keyboard.h"
 
 #include <iostream>
+#include <SDL.h>
 
-void Keyboard::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-	if (action == GLFW_PRESS) {
-		_keyStatus[key] = true;
-	}
-	else if (action == GLFW_RELEASE) {
-		_keyStatus[key] = false;
-	}
+void Keyboard::key_callback(int key, int action) {
+	_keyStatus[key] = action & 1;
 }
 
 bool Keyboard::isKeyDown(int key) {
