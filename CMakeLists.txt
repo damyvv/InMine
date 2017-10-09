@@ -70,7 +70,7 @@ if (MSVC)
 endif()
 
 # Copy resources
-message(STATUS "Coping resources...")
+message(STATUS "Copying resources...")
 file(COPY "res" DESTINATION "${CMAKE_BINARY_DIR}")
 
 add_executable (InMine ${InMine_SOURCE})
