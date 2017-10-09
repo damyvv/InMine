@@ -32,6 +32,8 @@
 
 #include "utils/input/Keyboard.h"
 
+#include "graphics/Camera.h"
+
 
 #define WIDTH 800
 #define HEIGHT 600
@@ -54,10 +56,11 @@ int main() {
 	glClearColor(84.0f / 255.0f, 149.0f / 255.0f, 255.0f / 255.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
 
 	DefaultShaderProgram* program = new DefaultShaderProgram();
 	Renderer<const IRenderable3D*>* renderer = new Default3DRenderer(program);
+
+	Camera cam;
 
 	Cube c0;
 	Cube c1;
@@ -77,6 +80,46 @@ int main() {
 	FPSCounter fps;
 	while (window.isOpen()) {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		program->setViewMatrix(cam.getViewMatrix());
+
+		// Movement
+		if (Keyboard::isKeyDown(GLFW_KEY_A)) {
+			cam.position.x += 0.001f * cos(cam.rotation.y);
+			cam.position.z += 0.001f * sin(cam.rotation.y);
+		}
+		if (Keyboard::isKeyDown(GLFW_KEY_D)) {
+			cam.position.x -= 0.001f * cos(cam.rotation.y);
+			cam.position.z -= 0.001f * sin(cam.rotation.y);
+		}
+		if (Keyboard::isKeyDown(GLFW_KEY_W)) {
+			cam.position.z += 0.001f * cos(cam.rotation.y);
+			cam.position.x -= 0.001f * sin(cam.rotation.y);
+		}
+		if (Keyboard::isKeyDown(GLFW_KEY_S)) {
+			cam.position.z -= 0.001f * cos(cam.rotation.y);
+			cam.position.x += 0.001f * sin(cam.rotation.y);
+		}
+		if (Keyboard::isKeyDown(GLFW_KEY_SPACE)) {
+			cam.position.y -= 0.001f;
+		}
+		if (Keyboard::isKeyDown(GLFW_KEY_C)) {
+			cam.position.y += 0.001f;
+		}
+
+		// Rotation
+		if (Keyboard::isKeyDown(GLFW_KEY_LEFT)) {
+			cam.rotation.y -= 0.0002f;
+		}
+		if (Keyboard::isKeyDown(GLFW_KEY_RIGHT)) {
+			cam.rotation.y += 0.0002f;
+		}
+		if (Keyboard::isKeyDown(GLFW_KEY_UP)) {
+			cam.rotation.x -= 0.0002f;
+		}
+		if (Keyboard::isKeyDown(GLFW_KEY_DOWN)) {
+			cam.rotation.x += 0.0002f;
+		}
+
 
 		auto now = std::chrono::high_resolution_clock::now();
 		auto duration = now.time_since_epoch();

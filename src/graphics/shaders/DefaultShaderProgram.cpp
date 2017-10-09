@@ -24,4 +24,5 @@ DefaultShaderProgram::~DefaultShaderProgram() {
 void DefaultShaderProgram::getMatrixLocations() {
 	m_ModelMatrixLocation = getUniformLocation("modelMatrix");
 	m_ProjectionMatrixLocation = getUniformLocation("projectionMatrix");
+	m_ViewMatrixLocation = getUniformLocation("viewMatrix");
 }
