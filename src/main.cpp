@@ -34,7 +34,7 @@
 
 #include "graphics/Camera.h"
 
-#include "graphics/textures/Texture.h"
+#include "graphics/textures/TextureManager.h"
 
 #define WIDTH 800
 #define HEIGHT 600
@@ -61,12 +61,14 @@ int main(int argc, char *args[]) {
 	DefaultShaderProgram* program = new DefaultShaderProgram();
 	Renderer<const IRenderable3D*>* renderer = new Default3DRenderer(program);
 
+	TextureManager tm;
+
 	glActiveTexture(GL_TEXTURE0);
-	Texture texSide("res/textures/pack0/assets/minecraft/textures/blocks/grass_side.png");
+	Texture* texSide = tm.requestTexture("res/textures/pack0/assets/minecraft/textures/blocks/grass_side.png");
 	glActiveTexture(GL_TEXTURE1);
-	Texture texTop("res/textures/pack0/assets/minecraft/textures/blocks/grass_top.png");
+	Texture* texTop = tm.requestTexture("res/textures/pack0/assets/minecraft/textures/blocks/grass_top.png");
 	glActiveTexture(GL_TEXTURE2);
-	Texture texBottom("res/textures/pack0/assets/minecraft/textures/blocks/dirt.png");
+	Texture* texBottom = tm.requestTexture("res/textures/pack0/assets/minecraft/textures/blocks/dirt.png");
 
 	Camera cam;
 
