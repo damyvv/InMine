@@ -7,7 +7,7 @@ Texture::Texture(const char* path) {
 	glGenTextures(1, &m_ID);
 	glBindTexture(GL_TEXTURE_2D, m_ID);
 
-	GLubyte* pixels = stbi_load("res/textures/pack0/assets/minecraft/textures/blocks/dirt.png", &m_Width, &m_Height, nullptr, 4);
+	GLubyte* pixels = stbi_load(path, &m_Width, &m_Height, nullptr, 4);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);

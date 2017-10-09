@@ -56,12 +56,17 @@ int main(int argc, char *args[]) {
 
 	glClearColor(84.0f / 255.0f, 149.0f / 255.0f, 255.0f / 255.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
+//	glEnable(GL_CULL_FACE);
 
 	DefaultShaderProgram* program = new DefaultShaderProgram();
 	Renderer<const IRenderable3D*>* renderer = new Default3DRenderer(program);
 
-	Texture tex("res/textures/pack0/assets/minecraft/textures/blocks/dirt.png");
+	glActiveTexture(GL_TEXTURE0);
+	Texture texSide("res/textures/pack0/assets/minecraft/textures/blocks/grass_side.png");
+	glActiveTexture(GL_TEXTURE1);
+	Texture texTop("res/textures/pack0/assets/minecraft/textures/blocks/grass_top.png");
+	glActiveTexture(GL_TEXTURE2);
+	Texture texBottom("res/textures/pack0/assets/minecraft/textures/blocks/dirt.png");
 
 	Camera cam;
 
