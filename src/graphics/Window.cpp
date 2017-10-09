@@ -1,5 +1,7 @@
 #include "Window.h"
 
+#include "../utils/input/Keyboard.h"
+
 Window::Window(unsigned int width, unsigned int height, bool fullscreen, std::string title) : 
 		m_Width(width), 
 		m_Height(height), 
@@ -28,6 +30,8 @@ Window::Window(unsigned int width, unsigned int height, bool fullscreen, std::st
 		glfwDestroyWindow(m_Window);
 		return;
 	}
+
+	glfwSetKeyCallback(m_Window, Keyboard::key_callback);
 
 	m_IsOpen = true;
 }

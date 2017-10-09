@@ -30,6 +30,8 @@
 
 #include "graphics/renderer/Default3DRenderer.h"
 
+#include "utils/input/Keyboard.h"
+
 
 #define WIDTH 800
 #define HEIGHT 600
