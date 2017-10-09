@@ -30,15 +30,12 @@ Window::Window(unsigned int width, unsigned int height, bool fullscreen, std::st
 	if (m_Context == NULL) {
 		m_Error += "Failed to create OpenGL context:\n";
 		m_Error += SDL_GetError();
-		SDL_DestroyWindow(m_Window);
 		return;
 	}
 
 	int result = glewInit();
 	if (result != GLEW_OK) {
 		m_Error = "Fatal error! Unexpected result from glewInit()";
-		SDL_GL_DeleteContext(m_Context);
-		SDL_DestroyWindow(m_Window);
 		return;
 	}
 
@@ -46,8 +43,10 @@ Window::Window(unsigned int width, unsigned int height, bool fullscreen, std::st
 }
 
 Window::~Window() {
-	SDL_GL_DeleteContext(m_Context);
-	SDL_DestroyWindow(m_Window);
+	if (m_Context != NULL)
+		SDL_GL_DeleteContext(m_Context);
+	if (m_Window)
+		SDL_DestroyWindow(m_Window);
 	SDL_Quit();
 }
 
