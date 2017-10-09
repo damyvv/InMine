@@ -31,6 +31,7 @@ Window::Window(unsigned int width, unsigned int height, bool fullscreen, std::st
 		m_Error += "Failed to create OpenGL context:\n";
 		m_Error += SDL_GetError();
 		SDL_DestroyWindow(m_Window);
+		return;
 	}
 
 	int result = glewInit();
