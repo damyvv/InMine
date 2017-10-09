@@ -32,6 +32,11 @@ message(STATUS "Looking for OpenGL...")
 # Add OpenGL
 find_package(OpenGL REQUIRED)
 
+# SDL2 Configuration
+message(STATUS "Looking for SDL2...")
+add_subdirectory("${PROJECT_SOURCE_DIR}/Dependencies/SDL2")
+include_directories("${PROJECT_SOURCE_DIR}/Dependencies/SDL2/include")
+
 # GLFW Configuration
 message(STATUS "Configuring GLFW...")
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
@@ -75,6 +80,8 @@ file(COPY "res" DESTINATION "${CMAKE_BINARY_DIR}")
 
 add_executable (InMine ${InMine_SOURCE})
 
+target_link_libraries (InMine SDL2-static)
+target_link_libraries (InMine SDL2main)
 target_link_libraries (InMine libglew_static)
 target_link_libraries (InMine glfw)
 target_link_libraries (InMine ${OPENGL_gl_LIBRARY})

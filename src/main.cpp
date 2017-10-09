@@ -34,11 +34,13 @@
 
 #include "graphics/Camera.h"
 
+#include <SDL.h>
+
 
 #define WIDTH 800
 #define HEIGHT 600
 
-int main() {
+int main(int argc, char *args[]) {
 	std::cout << "InMine version: " << InMine_VERSION_STRING << std::endl;
 	std::cout << "GLFW version: " << GLFW_VERSION_MAJOR << "." << GLFW_VERSION_MINOR << "." << GLFW_VERSION_REVISION << std::endl;
 
