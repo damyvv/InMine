@@ -9,41 +9,56 @@ Window::Window(unsigned int width, unsigned int height, bool fullscreen, std::st
 		m_Title(title),
 		m_IsOpen(false) {
 
-
-	if (!glfwInit()) {
-		m_Error = "Failed to initialize GLFW";
+	m_Error = "";
+	if (SDL_Init(SDL_INIT_VIDEO)) {
+		m_Error += "Could not initalize SDL2:\n";
+		m_Error += SDL_GetError();
 		return;
 	}
 
-	m_Window = glfwCreateWindow(800, 600, m_Title.c_str(), NULL, NULL);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+	m_Window = SDL_CreateWindow(m_Title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_OPENGL);
 	if (!m_Window) {
-		m_Error = "Failed to create a GLFW window";
+		m_Error += "Failed to create a window:\n";
+		m_Error += SDL_GetError();
 		return;
 	}
 
-	glfwMakeContextCurrent(m_Window);
+	m_Context = SDL_GL_CreateContext(m_Window);
+	if (m_Context == NULL) {
+		m_Error += "Failed to create OpenGL context:\n";
+		m_Error += SDL_GetError();
+		SDL_DestroyWindow(m_Window);
+	}
 
-	glewExperimental = true;
 	int result = glewInit();
-	if (result) {
+	if (result != GLEW_OK) {
 		m_Error = "Fatal error! Unexpected result from glewInit()";
-		glfwDestroyWindow(m_Window);
+		SDL_GL_DeleteContext(m_Context);
+		SDL_DestroyWindow(m_Window);
 		return;
 	}
-
-	glfwSetKeyCallback(m_Window, Keyboard::key_callback);
 
 	m_IsOpen = true;
 }
 
 Window::~Window() {
-	glfwTerminate();
+	SDL_GL_DeleteContext(m_Context);
+	SDL_DestroyWindow(m_Window);
+	SDL_Quit();
 }
 
 void Window::update() {
-	m_IsOpen &= !glfwWindowShouldClose(m_Window);
-
-	glfwSwapBuffers(m_Window);
-
-	glfwPollEvents();
+	SDL_Event e;
+	while (SDL_PollEvent(&e)) {
+		if (e.type == SDL_QUIT) {
+			m_IsOpen = false;
+		}
+		else if (e.type == SDL_KEYDOWN || e.type == SDL_KEYUP) {
+			Keyboard::key_callback(e.key.keysym.sym, e.key.state);
+		}
+	}
+	SDL_GL_SwapWindow(m_Window);
 }

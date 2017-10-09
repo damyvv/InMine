@@ -1,7 +1,7 @@
 #include <InMineConfig.h>
 
+#include <SDL.h>
 #include <GL/glew.h>
-#include <GLFW/glfw3.h>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -34,15 +34,13 @@
 
 #include "graphics/Camera.h"
 
-#include <SDL.h>
-
 
 #define WIDTH 800
 #define HEIGHT 600
 
 int main(int argc, char *args[]) {
 	std::cout << "InMine version: " << InMine_VERSION_STRING << std::endl;
-	std::cout << "GLFW version: " << GLFW_VERSION_MAJOR << "." << GLFW_VERSION_MINOR << "." << GLFW_VERSION_REVISION << std::endl;
+	std::cout << "SDL version: " << SDL_MAJOR_VERSION << "." << SDL_MINOR_VERSION << "." << SDL_PATCHLEVEL << std::endl;
 
 	std::string title = "InMine ";
 	title += InMine_VERSION_STRING;
@@ -85,43 +83,42 @@ int main(int argc, char *args[]) {
 		program->setViewMatrix(cam.getViewMatrix());
 
 		// Movement
-		if (Keyboard::isKeyDown(GLFW_KEY_A)) {
+		if (Keyboard::isKeyDown(SDLK_a)) {
 			cam.position.x += 0.001f * cos(cam.rotation.y);
 			cam.position.z += 0.001f * sin(cam.rotation.y);
 		}
-		if (Keyboard::isKeyDown(GLFW_KEY_D)) {
+		if (Keyboard::isKeyDown(SDLK_d)) {
 			cam.position.x -= 0.001f * cos(cam.rotation.y);
 			cam.position.z -= 0.001f * sin(cam.rotation.y);
 		}
-		if (Keyboard::isKeyDown(GLFW_KEY_W)) {
+		if (Keyboard::isKeyDown(SDLK_w)) {
 			cam.position.z += 0.001f * cos(cam.rotation.y);
 			cam.position.x -= 0.001f * sin(cam.rotation.y);
 		}
-		if (Keyboard::isKeyDown(GLFW_KEY_S)) {
+		if (Keyboard::isKeyDown(SDLK_s)) {
 			cam.position.z -= 0.001f * cos(cam.rotation.y);
 			cam.position.x += 0.001f * sin(cam.rotation.y);
 		}
-		if (Keyboard::isKeyDown(GLFW_KEY_SPACE)) {
+		if (Keyboard::isKeyDown(SDLK_SPACE)) {
 			cam.position.y -= 0.001f;
 		}
-		if (Keyboard::isKeyDown(GLFW_KEY_C)) {
+		if (Keyboard::isKeyDown(SDLK_c)) {
 			cam.position.y += 0.001f;
 		}
 
 		// Rotation
-		if (Keyboard::isKeyDown(GLFW_KEY_LEFT)) {
+		if (Keyboard::isKeyDown(SDLK_LEFT)) {
 			cam.rotation.y -= 0.0002f;
 		}
-		if (Keyboard::isKeyDown(GLFW_KEY_RIGHT)) {
+		if (Keyboard::isKeyDown(SDLK_RIGHT)) {
 			cam.rotation.y += 0.0002f;
 		}
-		if (Keyboard::isKeyDown(GLFW_KEY_UP)) {
+		if (Keyboard::isKeyDown(SDLK_UP)) {
 			cam.rotation.x -= 0.0002f;
 		}
-		if (Keyboard::isKeyDown(GLFW_KEY_DOWN)) {
+		if (Keyboard::isKeyDown(SDLK_DOWN)) {
 			cam.rotation.x += 0.0002f;
 		}
-
 
 		auto now = std::chrono::high_resolution_clock::now();
 		auto duration = now.time_since_epoch();
