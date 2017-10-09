@@ -51,6 +51,9 @@ include_directories("${PROJECT_SOURCE_DIR}/Dependencies/glm")
 
 include_directories("${PROJECT_SOURCE_DIR}/include")
 
+# Include STB
+include_directories("${PROJECT_SOURCE_DIR}/Dependencies/stb")
+
 file(GLOB_RECURSE InMine_SOURCE
 	"src/*.cpp"
 	"src/*.h"
