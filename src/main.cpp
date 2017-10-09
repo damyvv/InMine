@@ -34,8 +34,7 @@
 
 #include "graphics/Camera.h"
 
-#define STB_IMAGE_IMPLEMENTATION
-#include <stb_image.h>
+#include "graphics/textures/Texture.h"
 
 #define WIDTH 800
 #define HEIGHT 600
@@ -62,17 +61,7 @@ int main(int argc, char *args[]) {
 	DefaultShaderProgram* program = new DefaultShaderProgram();
 	Renderer<const IRenderable3D*>* renderer = new Default3DRenderer(program);
 
-	int width, height;
-	GLubyte* pixels = stbi_load("res/textures/pack0/assets/minecraft/textures/blocks/dirt.png", &width, &height, nullptr, 4);
-	GLuint tex;
-	glGenTextures(1, &tex);
-	glBindTexture(GL_TEXTURE_2D, tex);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
-
-	stbi_image_free(pixels);
+	Texture tex("res/textures/pack0/assets/minecraft/textures/blocks/dirt.png");
 
 	Camera cam;
 
