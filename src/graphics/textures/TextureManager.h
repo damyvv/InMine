@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include <vector>
 
 #include "Texture.h"
 
@@ -13,4 +14,5 @@ public:
 	~TextureManager();
 
 	Texture* requestTexture(std::string path);
+	Texture* requestSpriteTexture(std::string name, std::vector<std::string> paths);
 };

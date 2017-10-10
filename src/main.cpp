@@ -66,13 +66,14 @@ int main(int argc, char *args[]) {
 
 	TextureManager tm;
 
-	glActiveTexture(GL_TEXTURE0);
-	SpriteTexture* sp = new SpriteTexture(16 * 3, 16);
-	sp->storeTexture(0 * 16, 0, "res/textures/pack0/assets/minecraft/textures/blocks/grass_side.png");
-	sp->storeTexture(1 * 16, 0, "res/textures/pack0/assets/minecraft/textures/blocks/grass_top.png");
-	sp->storeTexture(2 * 16, 0, "res/textures/pack0/assets/minecraft/textures/blocks/dirt.png");
+	Texture* grass = tm.requestSpriteTexture("grass", {
+		"res/textures/pack0/assets/minecraft/textures/blocks/grass_side.png",
+		"res/textures/pack0/assets/minecraft/textures/blocks/grass_top.png",
+		"res/textures/pack0/assets/minecraft/textures/blocks/dirt.png"
+	});
 
 	Camera cam;
+	cam.position.y = -2;
 
 	Cube c0;
 	Cube c1;
