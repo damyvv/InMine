@@ -36,6 +36,10 @@
 
 #include "graphics/textures/TextureManager.h"
 
+#include "graphics/textures/SpriteTexture.h"
+
+#include "stb_image.h"
+
 #define WIDTH 800
 #define HEIGHT 600
 
@@ -64,11 +68,10 @@ int main(int argc, char *args[]) {
 	TextureManager tm;
 
 	glActiveTexture(GL_TEXTURE0);
-	Texture* texSide = tm.requestTexture("res/textures/pack0/assets/minecraft/textures/blocks/grass_side.png");
-	glActiveTexture(GL_TEXTURE1);
-	Texture* texTop = tm.requestTexture("res/textures/pack0/assets/minecraft/textures/blocks/grass_top.png");
-	glActiveTexture(GL_TEXTURE2);
-	Texture* texBottom = tm.requestTexture("res/textures/pack0/assets/minecraft/textures/blocks/dirt.png");
+	SpriteTexture* sp = new SpriteTexture(16 * 3, 16);
+	sp->storeTexture(0 * 16, 0, "res/textures/pack0/assets/minecraft/textures/blocks/grass_side.png");
+	sp->storeTexture(1 * 16, 0, "res/textures/pack0/assets/minecraft/textures/blocks/grass_top.png");
+	sp->storeTexture(2 * 16, 0, "res/textures/pack0/assets/minecraft/textures/blocks/dirt.png");
 
 	Camera cam;
 
@@ -144,6 +147,11 @@ int main(int argc, char *args[]) {
 		renderer->render();
 
 		window.update();
+
+		int err = glGetError();
+		if (err != GL_NO_ERROR) {
+			std::cout << "OpenGL Error: " << err << std::endl;
+		}
 
 		fps.tick();
 	}

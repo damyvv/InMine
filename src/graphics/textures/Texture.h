@@ -5,16 +5,23 @@
 
 class Texture
 {
-private:
+protected:
 	GLuint m_ID;
 	int m_Width, m_Height;
 public:
 	Texture(const char* path);
-	~Texture();
+	Texture(int width, int height);
+	virtual ~Texture();
 
 	inline void bind() const { glBindTexture(GL_TEXTURE_2D, m_ID); }
 	inline void unbind() const { glBindTexture(GL_TEXTURE_2D, 0); }
 
 	inline int getWidth() const { return m_Width; }
 	inline int getHeight() const { return m_Height; }
+
+protected:
+	GLubyte* loadImage(const char* path, int* width, int* height);
+	void freeImage(GLubyte* image);
+private:
+	void genTexture();
 };
