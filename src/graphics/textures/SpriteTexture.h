@@ -1,14 +1,15 @@
 #pragma once
 
 #include "Texture.h"
+#include "TextureManager.h"
 
 class SpriteTexture : public Texture
 {
-private:
+	friend TextureManager;
 
-public:
+protected:
 	SpriteTexture(int width, int height);
 	virtual ~SpriteTexture();
-
-	void storeTexture(int offsetX, int offsetY, const char* path);
+public:
+	virtual void storeTexture(int offsetX, int offsetY, const char* path);
 };

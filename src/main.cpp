@@ -65,7 +65,7 @@ int main(int argc, char *args[]) {
 	Renderer<const IRenderable3D*>* renderer = new Default3DRenderer(program);
 
 	TextureManager tm;
-
+	
 	Texture* grass = tm.requestSpriteTexture("grass", {
 		"res/textures/pack0/assets/minecraft/textures/blocks/grass_side.png",
 		"res/textures/pack0/assets/minecraft/textures/blocks/grass_top.png",

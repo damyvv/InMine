@@ -3,8 +3,7 @@
 #include <map>
 #include <vector>
 
-#include "Texture.h"
-
+class Texture;
 class TextureManager
 {
 private:

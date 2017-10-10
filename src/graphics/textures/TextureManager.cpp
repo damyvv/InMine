@@ -1,8 +1,11 @@
+#include "Texture.h"
 #include "TextureManager.h"
 
 #include "SpriteTexture.h"
+
 #include <stb_image.h>
 #include <iostream>
+
 
 TextureManager::TextureManager() {
 
