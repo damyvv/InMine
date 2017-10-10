@@ -3,6 +3,8 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
+#include <iostream>
+
 Texture::Texture(const char* path) {
 	genTexture();
 
@@ -25,7 +27,10 @@ Texture::~Texture() {
 }
 
 GLubyte* Texture::loadImage(const char* path, int* width, int* height) {
-	return stbi_load(path, width, height, nullptr, 4);
+	GLubyte* img = stbi_load(path, width, height, nullptr, 4);
+	if (!img)
+		std::cout << "Failed to find image: \"" << path << "\"" << std::endl;
+	return img;
 }
 
 void Texture::freeImage(GLubyte* image) {
