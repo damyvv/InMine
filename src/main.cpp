@@ -8,7 +8,6 @@
 
 #include <iostream>
 #include <stdio.h>
-#include <chrono>
 
 #include "graphics/Window.h"
 #include "utils/FPSCounter.h"
@@ -132,10 +131,7 @@ int main(int argc, char *args[]) {
 		if (Keyboard::isKeyDown(SDLK_DOWN)) {
 			cam.rotation.x += 0.0002f;
 		}
-
-		auto now = std::chrono::high_resolution_clock::now();
-		auto duration = now.time_since_epoch();
-		auto millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+		auto millis = SDL_GetTicks();
 
 		modelMatrix = glm::mat4(1);
 		modelMatrix = glm::translate(modelMatrix, glm::vec3(0, 0, -5));
