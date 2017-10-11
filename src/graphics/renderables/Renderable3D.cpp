@@ -3,6 +3,8 @@
 #include "../buffers/StaticArrayBuffer.h"
 #include "../buffers/StaticIndicesBuffer.h"
 
+#include <GL/glew.h>
+
 Renderable3D::Renderable3D(const std::vector<VertexData3D>& vertices, const std::vector<GLubyte>& indices)
 {
 	m_VAO = new VertexArray();
@@ -19,9 +21,9 @@ Renderable3D::Renderable3D(const std::vector<VertexData3D>& vertices, const std:
 	m_IndicesCount = indices.size();
 
 
-	glEnableVertexArrayAttrib(m_VAO->getID(), 0);
-	glEnableVertexArrayAttrib(m_VAO->getID(), 1);
-	glEnableVertexArrayAttrib(m_VAO->getID(), 2);
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(2);
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData3D), (void*)offsetof(VertexData3D, position));
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(VertexData3D), (void*)offsetof(VertexData3D, color));
