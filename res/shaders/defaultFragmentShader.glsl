@@ -1,7 +1,10 @@
 #version 330
 
 in vec4 frag_col;
+in vec2 frag_uv;
+
+uniform sampler2D tex;
 
 void main() {
-    gl_FragColor = frag_col;
+	gl_FragColor = texture(tex, frag_uv) * frag_col;
 }

@@ -8,7 +8,6 @@
 
 #include <iostream>
 #include <stdio.h>
-#include <chrono>
 
 #include "graphics/Window.h"
 #include "utils/FPSCounter.h"
@@ -34,6 +33,11 @@
 
 #include "graphics/Camera.h"
 
+#include "graphics/textures/TextureManager.h"
+
+#include "graphics/textures/SpriteTexture.h"
+
+#include "stb_image.h"
 
 #define WIDTH 800
 #define HEIGHT 600
@@ -55,12 +59,21 @@ int main(int argc, char *args[]) {
 
 	glClearColor(84.0f / 255.0f, 149.0f / 255.0f, 255.0f / 255.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
+//	glEnable(GL_CULL_FACE);
 
 	DefaultShaderProgram* program = new DefaultShaderProgram();
 	Renderer<const IRenderable3D*>* renderer = new Default3DRenderer(program);
 
+	TextureManager tm;
+	
+	Texture* grass = tm.requestSpriteTexture("grass", {
+		"res/textures/pack0/assets/minecraft/textures/blocks/grass_side.png",
+		"res/textures/pack0/assets/minecraft/textures/blocks/grass_top.png",
+		"res/textures/pack0/assets/minecraft/textures/blocks/dirt.png"
+	});
+
 	Camera cam;
+	cam.position.y = -2;
 
 	Cube c0;
 	Cube c1;
@@ -119,10 +132,7 @@ int main(int argc, char *args[]) {
 		if (Keyboard::isKeyDown(SDLK_DOWN)) {
 			cam.rotation.x += 0.0002f;
 		}
-
-		auto now = std::chrono::high_resolution_clock::now();
-		auto duration = now.time_since_epoch();
-		auto millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+		auto millis = SDL_GetTicks();
 
 		modelMatrix = glm::mat4(1);
 		modelMatrix = glm::translate(modelMatrix, glm::vec3(0, 0, -5));
@@ -134,6 +144,11 @@ int main(int argc, char *args[]) {
 		renderer->render();
 
 		window.update();
+
+		int err = glGetError();
+		if (err != GL_NO_ERROR) {
+			std::cout << "OpenGL Error: " << err << std::endl;
+		}
 
 		fps.tick();
 	}

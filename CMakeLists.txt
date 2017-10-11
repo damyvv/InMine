@@ -51,6 +51,9 @@ include_directories("${PROJECT_SOURCE_DIR}/Dependencies/glm")
 
 include_directories("${PROJECT_SOURCE_DIR}/include")
 
+# Include STB
+include_directories("${PROJECT_SOURCE_DIR}/Dependencies/stb")
+
 file(GLOB_RECURSE InMine_SOURCE
 	"src/*.cpp"
 	"src/*.h"
@@ -67,7 +70,7 @@ if (MSVC)
 endif()
 
 # Copy resources
-message(STATUS "Coping resources...")
+message(STATUS "Copying resources...")
 file(COPY "res" DESTINATION "${CMAKE_BINARY_DIR}")
 
 add_executable (InMine ${InMine_SOURCE})
