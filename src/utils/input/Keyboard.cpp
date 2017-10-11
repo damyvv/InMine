@@ -8,8 +8,7 @@ void Keyboard::key_callback(int key, int action) {
 }
 
 bool Keyboard::isKeyDown(int key) {
-	if (_keyStatus[key]) return true;
-	return false;
+	return _keyStatus[key] != 0;
 }
 
 std::map<int, bool> Keyboard::_keyStatus = std::map<int, bool>();
