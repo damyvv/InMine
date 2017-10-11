@@ -44,6 +44,7 @@ set(glew-cmake_BUILD_STATIC         ON  CACHE BOOL "" FORCE)
 set(glew-cmake_BUILD_SINGLE_CONTEXT ON  CACHE BOOL "" FORCE)
 set(glew-cmake_BUILD_MULTI_CONTEXT  OFF CACHE BOOL "" FORCE)
 add_subdirectory("${PROJECT_SOURCE_DIR}/Dependencies/glew")
+add_definitions(-DGLEW_STATIC)
 
 # glm Configuration
 message(STATUS "Adding glm...")
