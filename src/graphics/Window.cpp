@@ -1,6 +1,7 @@
 #include "Window.h"
 
 #include "../utils/input/Keyboard.h"
+#include "../utils/input/Mouse.h"
 
 Window::Window(unsigned int width, unsigned int height, bool fullscreen, std::string title) : 
 		m_Width(width), 
@@ -58,6 +59,13 @@ void Window::update() {
 		}
 		else if (e.type == SDL_KEYDOWN || e.type == SDL_KEYUP) {
 			Keyboard::key_callback(e.key.keysym.sym, e.key.state);
+		} 
+		else if (e.type == SDL_MOUSEBUTTONUP || e.type == SDL_MOUSEBUTTONDOWN) {
+			Mouse::mouse_button_callback(e.button.button, e.button.state);
+		}
+		else if (e.type == SDL_MOUSEMOTION) {
+			Mouse::mouse_pos_callback(e.motion.x, e.motion.y);
+			Mouse::mouse_rel_callback(e.motion.xrel, e.motion.yrel);
 		}
 	}
 	SDL_GL_SwapWindow(m_Window);
