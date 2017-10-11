@@ -10,5 +10,5 @@ public:
 	Camera() : position(0), rotation(0) {}
 	~Camera() {}
 
-	glm::mat4 getViewMatrix();
+	glm::mat4 getViewMatrix() const;
 };
