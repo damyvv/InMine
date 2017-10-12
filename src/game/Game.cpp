@@ -11,6 +11,7 @@
 
 #include "../graphics/textures/Texture.h"
 
+#include "../graphics/renderer/CubeRenderer.h"
 #include "../graphics/renderer/Default3DRenderer.h"
 
 Game::Game(int width, int height)
@@ -29,7 +30,7 @@ void Game::initRendering() {
 	glEnable(GL_CULL_FACE);
 
 	glm::mat4 projectionMatrix = glm::perspective(70.0f, (float)m_Width / (float)m_Height, 0.1f, 100.0f);
-	m_Renderer = new Default3DRenderer(projectionMatrix, &m_Camera);
+	m_Renderer = new CubeRenderer(projectionMatrix, &m_Camera);
 }
 
 void Game::initGame() {
