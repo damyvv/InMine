@@ -16,6 +16,8 @@ private:
 	Renderer<const IRenderable3D*>* m_Renderer;
 	std::vector<Cube*> m_Cubes;
 	int m_Width, m_Height;
+	int m_StartDT;
+	int m_DT;
 public:
 	Game(int width, int height);
 	~Game();
@@ -27,4 +29,6 @@ private:
 	void initRendering();
 	void initGame();
 	void handleInput();
+
+	void calcDT();
 };

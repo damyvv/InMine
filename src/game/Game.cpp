@@ -18,6 +18,8 @@ Game::Game(int width, int height)
 	initGame();
 
 	m_Camera.position.y = -2;
+
+	m_DT = m_StartDT = 0;
 }
 
 void Game::initRendering() {
@@ -43,6 +45,8 @@ void Game::initGame() {
 }
 
 void Game::update() {
+	calcDT();
+
 	handleInput();
 }
 
@@ -57,27 +61,28 @@ void Game::render() {
 
 void Game::handleInput() {
 	// Movement
+	float moveAmt = m_DT * 3.0f / 1000.0f;
 	if (Keyboard::isKeyDown(SDLK_a)) {
-		m_Camera.position.x += 0.001f * cos(m_Camera.rotation.y);
-		m_Camera.position.z += 0.001f * sin(m_Camera.rotation.y);
+		m_Camera.position.x += moveAmt * cos(m_Camera.rotation.y);
+		m_Camera.position.z += moveAmt * sin(m_Camera.rotation.y);
 	}
 	if (Keyboard::isKeyDown(SDLK_d)) {
-		m_Camera.position.x -= 0.001f * cos(m_Camera.rotation.y);
-		m_Camera.position.z -= 0.001f * sin(m_Camera.rotation.y);
+		m_Camera.position.x -= moveAmt * cos(m_Camera.rotation.y);
+		m_Camera.position.z -= moveAmt * sin(m_Camera.rotation.y);
 	}
 	if (Keyboard::isKeyDown(SDLK_w)) {
-		m_Camera.position.z += 0.001f * cos(m_Camera.rotation.y);
-		m_Camera.position.x -= 0.001f * sin(m_Camera.rotation.y);
+		m_Camera.position.z += moveAmt * cos(m_Camera.rotation.y);
+		m_Camera.position.x -= moveAmt * sin(m_Camera.rotation.y);
 	}
 	if (Keyboard::isKeyDown(SDLK_s)) {
-		m_Camera.position.z -= 0.001f * cos(m_Camera.rotation.y);
-		m_Camera.position.x += 0.001f * sin(m_Camera.rotation.y);
+		m_Camera.position.z -= moveAmt * cos(m_Camera.rotation.y);
+		m_Camera.position.x += moveAmt * sin(m_Camera.rotation.y);
 	}
 	if (Keyboard::isKeyDown(SDLK_SPACE)) {
-		m_Camera.position.y -= 0.001f;
+		m_Camera.position.y -= moveAmt;
 	}
 	if (Keyboard::isKeyDown(SDLK_c)) {
-		m_Camera.position.y += 0.001f;
+		m_Camera.position.y += moveAmt;
 	}
 
 	// Rotation
@@ -92,6 +97,17 @@ void Game::handleInput() {
 	}
 	if (Keyboard::isKeyDown(SDLK_DOWN)) {
 		m_Camera.rotation.x += 0.0002f;
+	}
+}
+
+void Game::calcDT() {
+	if (!m_DT && !m_StartDT) {
+		m_StartDT = SDL_GetTicks();
+	}
+	else {
+		int now = SDL_GetTicks();
+		m_DT = now - m_StartDT;
+		m_StartDT = now;
 	}
 }
 
