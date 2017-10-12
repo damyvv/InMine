@@ -7,6 +7,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "../utils/input/Keyboard.h"
+#include "../utils/input/Mouse.h"
 
 #include "../graphics/textures/Texture.h"
 
@@ -86,18 +87,15 @@ void Game::handleInput() {
 	}
 
 	static bool mouseCap = false;
+	if (Keyboard::getKeyState(SDLK_ESCAPE) == Keyboard::KEY_PRESS) {
+		mouseCap = !mouseCap;
+		SDL_SetRelativeMouseMode((SDL_bool)mouseCap);
+	}
+
 	// Rotation
-	if (Keyboard::isKeyDown(SDLK_LEFT)) {
-		m_Camera.rotation.y -= 0.0002f;
-	}
-	if (Keyboard::isKeyDown(SDLK_RIGHT)) {
-		m_Camera.rotation.y += 0.0002f;
-	}
-	if (Keyboard::isKeyDown(SDLK_UP)) {
-		m_Camera.rotation.x -= 0.0002f;
-	}
-	if (Keyboard::isKeyDown(SDLK_DOWN)) {
-		m_Camera.rotation.x += 0.0002f;
+	if (mouseCap) {
+		m_Camera.rotation.y += 0.002f * Mouse::getDX();
+		m_Camera.rotation.x += 0.002f * Mouse::getDY();
 	}
 }
 

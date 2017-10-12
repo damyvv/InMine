@@ -54,6 +54,7 @@ Window::~Window() {
 void Window::update() {
 	SDL_Event e;
 	Keyboard::update();
+	Mouse::reset();
 	while (SDL_PollEvent(&e)) {
 		if (e.type == SDL_QUIT) {
 			m_IsOpen = false;

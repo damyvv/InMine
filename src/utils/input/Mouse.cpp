@@ -8,8 +8,12 @@ void Mouse::mouse_pos_callback(int posX, int posY) {
 }
 
 void Mouse::mouse_rel_callback(int dX, int dY) {
-	_dX = dX;
-	_dY = dY;
+	_dX += dX;
+	_dY += dY;
+}
+
+void Mouse::reset() {
+	_dX = _dY = 0;
 }
 
 void Mouse::mouse_button_callback(int button, bool state) {
