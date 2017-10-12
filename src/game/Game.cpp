@@ -85,6 +85,7 @@ void Game::handleInput() {
 		m_Camera.position.y += moveAmt;
 	}
 
+	static bool mouseCap = false;
 	// Rotation
 	if (Keyboard::isKeyDown(SDLK_LEFT)) {
 		m_Camera.rotation.y -= 0.0002f;

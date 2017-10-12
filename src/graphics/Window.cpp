@@ -53,11 +53,12 @@ Window::~Window() {
 
 void Window::update() {
 	SDL_Event e;
+	Keyboard::update();
 	while (SDL_PollEvent(&e)) {
 		if (e.type == SDL_QUIT) {
 			m_IsOpen = false;
 		}
-		else if (e.type == SDL_KEYDOWN || e.type == SDL_KEYUP) {
+		else if ((e.type == SDL_KEYDOWN || e.type == SDL_KEYUP) && e.key.repeat == 0) {
 			Keyboard::key_callback(e.key.keysym.sym, e.key.state);
 		} 
 		else if (e.type == SDL_MOUSEBUTTONUP || e.type == SDL_MOUSEBUTTONDOWN) {
