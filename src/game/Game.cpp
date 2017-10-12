@@ -40,9 +40,11 @@ void Game::initGame() {
 	});
 	grass->bind();
 
-	Cube* c0 = new Cube();
-	c0->setModelMatrix(glm::translate(glm::mat4(1), glm::vec3(0, 0, -5)));
-	m_Cubes.push_back(c0);
+	for (int x = 0; x < 16; x++) {
+		Cube* c0 = new Cube();
+		c0->setModelMatrix(glm::translate(glm::mat4(1), glm::vec3(x, 0, -5)));
+		m_Cubes.push_back(c0);
+	}
 }
 
 void Game::update() {
@@ -61,8 +63,13 @@ void Game::render() {
 }
 
 void Game::handleInput() {
+	static bool fastMode = false;
+	if (Keyboard::getKeyState(SDLK_TAB) == Keyboard::KEY_PRESS) {
+		fastMode = !fastMode;
+	}
+
 	// Movement
-	float moveAmt = m_DT * 3.0f / 1000.0f;
+	float moveAmt = m_DT * (fastMode ? 10.0f : 3.0f) / 1000.0f;
 	if (Keyboard::isKeyDown(SDLK_a)) {
 		m_Camera.position.x += moveAmt * cos(m_Camera.rotation.y);
 		m_Camera.position.z += moveAmt * sin(m_Camera.rotation.y);
