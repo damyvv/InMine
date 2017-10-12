@@ -3,7 +3,7 @@
 #include "Renderer.h"
 #include "../renderables/Cube.h"
 #include "../Camera.h"
-#include "../shaders/DefaultShaderProgram.h"
+#include "../shaders/CubeShaderProgram.h"
 
 #include <vector>
 
@@ -13,7 +13,7 @@ class CubeRenderer : public Renderer<const Cube*> {
 private:
 	std::vector<const Cube*> m_Cubes;
 	const Camera* m_Camera;
-	DefaultShaderProgram* m_Shader;
+	CubeShaderProgram* m_Shader;
 public:
 	CubeRenderer(const glm::mat4& projectionMatrix, const Camera* cam);
 	~CubeRenderer();

@@ -2,7 +2,7 @@
 
 CubeRenderer::CubeRenderer(const glm::mat4& projectionMatrix, const Camera* cam) {
 	m_Camera = cam;
-	m_Shader = new DefaultShaderProgram();
+	m_Shader = new CubeShaderProgram();
 	m_Shader->start();
 	m_Shader->setProjectionMatrix(projectionMatrix);
 
