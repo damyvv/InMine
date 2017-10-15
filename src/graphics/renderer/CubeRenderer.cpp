@@ -28,7 +28,7 @@ void CubeRenderer::render() {
 	r->bind();
 
 	for (int i = 0; i < m_Cubes.size(); i++) {
-		m_Shader->setModelMatrix(m_Cubes[i]->getModelMatrix());
+		m_Shader->setOffset(m_Cubes[i]->getPosition());
 		glDrawElements(GL_TRIANGLES, r->getIndicesCount(), GL_UNSIGNED_BYTE, 0);
 	}
 

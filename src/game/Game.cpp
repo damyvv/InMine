@@ -44,9 +44,7 @@ void Game::initGame() {
 	for (int x = 0; x < 16; x++) {
 		for (int z = 0; z < 16; z++) {
 			for (int y = 0; y < 64; y++) {
-				Cube* c0 = new Cube();
-				c0->setModelMatrix(glm::translate(glm::mat4(1), glm::vec3(x, -y, -z)));
-				m_Cubes.push_back(c0);
+				m_Cubes.push_back(new Cube(glm::vec3(x, -y, -z)));
 			}
 		}
 	}

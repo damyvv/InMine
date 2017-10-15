@@ -1,11 +1,10 @@
 #pragma once
 
 #include "Renderable3D.h"
-#include "IRenderable3D.h"
 
 #include <memory>
 
-class Cube : public IRenderable3D
+class Cube
 {
 private:
 	static Renderable3D* _sharedMesh;
@@ -13,13 +12,17 @@ private:
 	static const std::vector<VertexData3D> _cubeVertices;
 	static const std::vector<GLubyte> _cubeIndices;
 
-	glm::mat4 m_ModelMatrix;
+	glm::vec3 m_Position;
 public:
 	Cube();
+	Cube(glm::vec3 pos);
 	~Cube();
 
-	inline const Renderable3D* getRenderable3D() const override { return _sharedMesh; }
+	inline const Renderable3D* getRenderable3D() const { return _sharedMesh; }
 
-	inline const glm::mat4& getModelMatrix() const override { return m_ModelMatrix; }
-	inline void setModelMatrix(const glm::mat4& matrix) { m_ModelMatrix = matrix; }
+	inline const glm::vec3& getPosition() const { return m_Position; }
+	inline void setPosition(const glm::vec3 vec) { m_Position = vec; }
+
+private:
+	inline void initMesh();
 };

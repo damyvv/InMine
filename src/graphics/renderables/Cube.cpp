@@ -1,16 +1,22 @@
 #include "Cube.h"
 
-Cube::Cube()
-	: m_ModelMatrix(1)
-{
+Cube::Cube() {
+	initMesh();
+}
+
+Cube::Cube(glm::vec3 pos)
+	: m_Position(pos) {
+	initMesh();
+}
+
+void Cube::initMesh() {
 	if (_cubeCount == 0) {
 		_sharedMesh = new Renderable3D(_cubeVertices, _cubeIndices);
 	}
 	_cubeCount++;
 }
 
-Cube::~Cube()
-{
+Cube::~Cube() {
 	_cubeCount--;
 	if (_cubeCount == 0) {
 		delete _sharedMesh;
