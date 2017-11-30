@@ -41,6 +41,8 @@ Window::Window(unsigned int width, unsigned int height, bool fullscreen, std::st
 	}
 
 	m_IsOpen = true;
+
+	SDL_GL_SetSwapInterval(0);
 }
 
 Window::~Window() {
