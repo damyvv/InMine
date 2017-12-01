@@ -7,6 +7,12 @@ CubeRenderer::CubeRenderer(const glm::mat4& projectionMatrix, const Camera* cam)
 	m_Shader->setProjectionMatrix(projectionMatrix);
 
 	m_Cubes.reserve(BATCH_SIZE);
+
+	glGenBuffers(1, &m_OBO);
+	glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_OBO);
+	glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(float) * 4 * BATCH_SIZE, nullptr, GL_DYNAMIC_DRAW);
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, m_OBO);
+	glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 }
 
 CubeRenderer::~CubeRenderer() {
@@ -24,13 +30,19 @@ void CubeRenderer::render() {
 	m_Shader->start();
 	m_Shader->setViewMatrix(m_Camera->getViewMatrix());
 
+	glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_OBO);
+	glm::vec3* offsetsPtr = (glm::vec3*)glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_WRITE_ONLY);
+
+	for (int i = 0; i < m_Cubes.size(); i++) {
+		*offsetsPtr++ = m_Cubes[i]->getPosition();
+	}
+
+	glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
+
 	const Renderable3D* r = m_Cubes[0]->getRenderable3D();
 	r->bind();
 
-	for (int i = 0; i < m_Cubes.size(); i++) {
-		m_Shader->setOffset(m_Cubes[i]->getPosition());
-		glDrawElements(GL_TRIANGLES, r->getIndicesCount(), GL_UNSIGNED_BYTE, 0);
-	}
+	glDrawElementsInstanced(GL_TRIANGLES, r->getIndicesCount(), GL_UNSIGNED_BYTE, 0, m_Cubes.size());
 
 	m_Cubes.clear();
 }

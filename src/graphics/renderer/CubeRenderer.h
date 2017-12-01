@@ -14,6 +14,8 @@ private:
 	std::vector<const Cube*> m_Cubes;
 	const Camera* m_Camera;
 	CubeShaderProgram* m_Shader;
+
+	GLuint m_OBO;
 public:
 	CubeRenderer(const glm::mat4& projectionMatrix, const Camera* cam);
 	~CubeRenderer();

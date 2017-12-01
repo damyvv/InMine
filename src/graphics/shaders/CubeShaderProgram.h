@@ -7,12 +7,11 @@
 class CubeShaderProgram : public ShaderProgram
 {
 private:
-	GLint m_OffsetLocation, m_ProjectionMatrixLocation, m_ViewMatrixLocation;
+	GLint m_ProjectionMatrixLocation, m_ViewMatrixLocation;
 public:
 	CubeShaderProgram();
 	~CubeShaderProgram();
 
-	inline void setOffset(const glm::vec3& modelMatrix) const { loadUniformVec3(m_OffsetLocation, modelMatrix); };
 	inline void setProjectionMatrix(const glm::mat4& projectionMatrix) const { loadUniformMat4(m_ProjectionMatrixLocation, projectionMatrix); };
 	inline void setViewMatrix(const glm::mat4& viewMatrix) const { loadUniformMat4(m_ViewMatrixLocation, viewMatrix); }
 

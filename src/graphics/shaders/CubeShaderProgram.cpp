@@ -22,7 +22,6 @@ CubeShaderProgram::~CubeShaderProgram() {
 }
 
 void CubeShaderProgram::getMatrixLocations() {
-	m_OffsetLocation = getUniformLocation("offset");
 	m_ProjectionMatrixLocation = getUniformLocation("projectionMatrix");
 	m_ViewMatrixLocation = getUniformLocation("viewMatrix");
 }
