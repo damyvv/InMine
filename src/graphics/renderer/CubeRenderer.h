@@ -7,7 +7,7 @@
 
 #include <vector>
 
-#define BATCH_SIZE 50000
+#define BATCH_SIZE 32768
 
 class CubeRenderer : public Renderer<const Cube*> {
 private:
