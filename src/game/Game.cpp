@@ -29,7 +29,7 @@ void Game::initRendering() {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 
-	glm::mat4 projectionMatrix = glm::perspective(70.0f, (float)m_Width / (float)m_Height, 0.1f, 100.0f);
+	glm::mat4 projectionMatrix = glm::perspective(70.0f, (float)m_Width / (float)m_Height, 0.1f, 500.0f);
 	m_Renderer = new CubeRenderer(projectionMatrix, &m_Camera);
 }
 
@@ -41,10 +41,10 @@ void Game::initGame() {
 	});
 	grass->bind();
 
-	for (int x = 0; x < 16; x++) {
-		for (int z = 0; z < 16; z++) {
-			for (int y = 0; y < 64; y++) {
-				m_Cubes.push_back(new Cube(glm::vec3(x, -y, -z)));
+	for (int x = 0; x < 32; x++) {
+		for (int z = 0; z < 32; z++) {
+			for (int y = 0; y < 32; y++) {
+				m_Cubes.push_back(new Cube(glm::vec3(x * 2, -y * 2, -z * 2)));
 			}
 		}
 	}
